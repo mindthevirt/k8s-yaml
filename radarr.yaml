@@ -1,0 +1,53 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: radarr-deployment
+   labels:
+     app: radarr
+ spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: radarr
+   template:
+     metadata:
+       labels:
+         app: radarr
+
+     spec:
+      containers:
+         - name: radarr
+           image: linuxserver/radarr
+           ports:
+             - containerPort: 7878
+           volumeMounts:
+             - mountPath: /config
+               name: radarr-config
+             - mountPath: /downloads
+               name: radarr-downloads
+             - mountPath: /movies
+               name: radarr-movies
+      volumes:
+        - name: radarr-config
+          hostPath:
+            path: /nfs/media/radarr/config
+        - name: radarr-downloads
+          hostPath:
+            path: /nfs/media/radarr/downloads
+        - name: radarr-movies
+          hostPath:
+            path: /nfs/media/radarr/movies
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: radarr-service
+spec:
+  selector:
+    app: radarr
+  ports:
+  - protocol: TCP
+    port: 7878
+    targetPort: 7878
+  type: NodePort

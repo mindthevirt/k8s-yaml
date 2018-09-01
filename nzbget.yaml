@@ -1,0 +1,48 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: nzbget-deployment
+   labels:
+     app: nzbget
+ spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: nzbget
+   template:
+     metadata:
+       labels:
+         app: nzbget
+
+     spec:
+      containers:
+         - name: nzbget
+           image: linuxserver/nzbget
+           ports:
+             - containerPort: 6789
+           volumeMounts:
+             - mountPath: /config
+               name: nzbget-config
+             - mountPath: /downloads
+               name: nzbget-downloads
+      volumes:
+        - name: nzbget-config
+          hostPath:
+            path: /nfs/media/nzbget/config
+        - name: nzbget-downloads
+          hostPath:
+            path: /nfs/media/nzbget/downloads
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nzbget-service
+spec:
+  selector:
+    app: nzbget
+  ports:
+  - protocol: TCP
+    port: 6789
+    targetPort: 6789
+  type: NodePort

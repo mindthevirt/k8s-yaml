@@ -1,2 +1,2 @@
 # k8s-yaml
-Collection of yaml files for kubernetes
+This repository hold a collection of yaml files

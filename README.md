@@ -1,5 +1,5 @@
 # k8s-yaml
-This repository hold a collection of yaml files:
+This repository holds a collection of yaml files:
 
 
 * [NZBGet](https://github.com/mindthevirt/k8s-yaml/blob/master/nzbget.yaml) - Usenet Downloader written in C++ [Github](https://github.com/nzbget)

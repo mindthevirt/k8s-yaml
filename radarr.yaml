@@ -28,6 +28,8 @@
                name: radarr-downloads
              - mountPath: /movies
                name: radarr-movies
+             - mountPath: /tvshows
+               name: radarr-tvshows
       volumes:
         - name: radarr-config
           hostPath:
@@ -38,6 +40,9 @@
         - name: radarr-movies
           hostPath:
             path: /nfs/media/radarr/movies
+        - name: radarr-tvshows
+          hostPath:
+            path: /nfs/media/radarr/tvshows
 ---
 kind: Service
 apiVersion: v1
